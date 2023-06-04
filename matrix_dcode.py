@@ -89,7 +89,7 @@ message = "YOU MAY BE DISSAPPOINTED BUT YOU CANNOT GLITCH IT"
 key = m._2x2_matrix(-1, 1, 1, -1)
 
 encoded_message = encode_message(message, key)
-print(encoded_message)
+print("Encoded message: " + encoded_message)
 
 decoded_message = decode_message(encoded_message, key)
-print(decoded_message)
+print("Decoded message: " + decoded_message)
