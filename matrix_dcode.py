@@ -49,7 +49,10 @@ def convert_matrix_array_to_message(mtx_arr):
 
     char_array = []
     for val in int_array:
-        char_array.append(char_keys[val + 3])
+        try:
+            char_array.append(char_keys[val + 3])
+        except:
+            char_array.append(' ')
 
     output = ""
     for char in char_array:
