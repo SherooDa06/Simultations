@@ -38,10 +38,10 @@ def convert_message_to_matrix_array(msg):
 def convert_matrix_array_to_message(mtx_arr):
     int_array = []
     for mtx in mtx_arr:
-        int_array.append(copy(mtx._11))
-        int_array.append(copy(mtx._12))
-        int_array.append(copy(mtx._21))
-        int_array.append(copy(mtx._22))
+        int_array.append(round(copy(mtx._11)))
+        int_array.append(round(copy(mtx._12)))
+        int_array.append(round(copy(mtx._21)))
+        int_array.append(round(copy(mtx._22)))
 
     char_keys = []
     for key in letters.keys():
@@ -62,21 +62,30 @@ def convert_matrix_array_to_message(mtx_arr):
 
 def encode_matrix_array(mtx_arr, key):
     output = []
+    
+    modified_key = m._2x2_matrix(0.6, 0.2, 0.8, 0)
+
     for mtx in mtx_arr:
-        output.append(m.add(mtx, key))
+        output.append(m.add(m.multiply_by_matrix(modified_key, mtx), key))
 
     return output
 
 def decode_matrix_array(mtx_arr, key):
     output = []
+    
+    modified_key = m._2x2_matrix(0.6, 0.2, 0.8, 0)
     for mtx in mtx_arr:
-        output.append(m.subtract(mtx, key))
+        output.append(m.multiply_by_matrix(m.inverse(modified_key), m.subtract(mtx, key)))
 
     return output
 
 def encode_message(msg, key):
     old_mtx_array = convert_message_to_matrix_array(msg)
     new_matrix_array = encode_matrix_array(old_mtx_array, key)
+
+    for mtx in new_matrix_array:
+        mtx.print()
+
     output = convert_matrix_array_to_message(new_matrix_array)
 
     return output
@@ -88,6 +97,24 @@ def decode_message(msg, key):
 
     return output
 
+def compare_strings(og, other):
+    og_list = []
+    for char in og:
+        og_list.append(char)
+
+    other_list = []
+    for char in other:
+        other_list.append(char)
+
+    no_of_same_chars = 0
+    char_index = 0
+
+    for char in other_list:
+        if og_list[char_index] == other_list[char_index]:
+            no_of_same_chars += 1
+
+    print (no_of_same_chars/len(og_list))
+
 message = "YOU MAY BE DISSAPPOINTED BUT YOU CANNOT GLITCH IT"
 key = m._2x2_matrix(-1, 1, 1, -1)
 
@@ -96,3 +123,5 @@ print("Encoded message: " + encoded_message)
 
 decoded_message = decode_message(encoded_message, key)
 print("Decoded message: " + decoded_message)
+
+compare_strings(message, decoded_message)

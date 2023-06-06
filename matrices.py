@@ -7,7 +7,7 @@ class _2x2_matrix:
 
     def print(this):
         print ('[' + str(this._11) + ' ' + str(this._12) + ']')
-        print ('[' + str(this._21) + ' ' + str(this._22) + ']')
+        print ('[' + str(this._21) + ' ' + str(this._22) + "]\n")
 
 def determinant(matrix): return (matrix._11 * matrix._22) - (matrix._12 * matrix._21)
 
